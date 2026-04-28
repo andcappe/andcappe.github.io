@@ -852,15 +852,19 @@
           </div>
         </div>
 
-        <!-- DESTRA: Agenda Calendly -->
+        <!-- DESTRA: Agenda Calendly (caricata solo con consenso cookie) -->
         <div class="calendly-container fade-in">
-          <iframe
-            src="https://calendly.com/andcappe?hide_gdpr_banner=1&background_color=ffffff&text_color=1a3a6b&primary_color=2554a0"
-            width="100%"
-            height="680"
-            frameborder="0"
-            style="border:none;">
-          </iframe>
+          <div class="calendly-placeholder" id="calendly-placeholder">
+            <i class="fa-regular fa-calendar-check"></i>
+            <h3>Prenota un appuntamento</h3>
+            <p>Per visualizzare il calendario accetta i cookie di terze parti.</p>
+            <button onclick="setCookieConsent('all')" style="
+              padding:10px 24px; background:var(--blue); color:#fff;
+              border:none; border-radius:8px; font-weight:700; font-size:0.88rem;
+              cursor:pointer; font-family:'Inter',sans-serif;">
+              <i class="fa-solid fa-check" style="margin-right:6px;"></i>Accetta e carica il calendario
+            </button>
+          </div>
         </div>
 
       </div>
@@ -962,6 +966,62 @@
     </div>
   </section>
 
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" style="
+    display:none; position:fixed; bottom:0; left:0; right:0; z-index:9999;
+    background:#fff; border-top:2px solid var(--blue-md);
+    box-shadow:0 -4px 24px rgba(26,58,107,0.13);
+    padding:1.2rem 5%; font-family:'Inter',sans-serif;
+  ">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:flex-start;
+                gap:2rem; flex-wrap:wrap; justify-content:space-between;">
+      <div style="flex:1; min-width:260px;">
+        <p style="font-size:0.88rem; color:var(--text); margin-bottom:0.4rem; font-weight:600;">
+          <i class="fa-solid fa-cookie-bite" style="color:var(--blue2); margin-right:6px;"></i>
+          Questo sito utilizza i cookie
+        </p>
+        <p style="font-size:0.8rem; color:var(--muted); margin:0; line-height:1.55;">
+          Utilizziamo cookie tecnici necessari al funzionamento del sito e cookie di terze parti
+          (Calendly, Google Fonts) per migliorare l'esperienza. Puoi accettare tutti i cookie o
+          limitarti a quelli strettamente necessari. Puoi modificare la scelta in qualsiasi momento
+          cliccando su <strong>Gestisci preferenze</strong> nel footer.
+          <a href="#" id="cookie-more-link" style="color:var(--blue2); text-decoration:underline;
+             font-size:0.78rem; margin-left:4px;">Leggi di più</a>
+        </p>
+        <div id="cookie-detail" style="display:none; margin-top:0.7rem;
+             background:var(--bg2); border:1px solid var(--border); border-radius:8px;
+             padding:0.8rem 1rem; font-size:0.78rem; color:#4a6080; line-height:1.6;">
+          <strong style="color:var(--blue); display:block; margin-bottom:0.4rem;">Tipologie di cookie utilizzati:</strong>
+          <ul style="padding-left:1.2rem; margin:0; display:flex; flex-direction:column; gap:0.25rem;">
+            <li><strong>Tecnici / necessari</strong> — Indispensabili per la navigazione. Non richiedono consenso.</li>
+            <li><strong>Google Fonts</strong> — Font caricati da Google. Possono registrare l'IP del visitatore.</li>
+            <li><strong>Calendly</strong> — Widget per la prenotazione di appuntamenti. Imposta cookie propri per la gestione del calendario.</li>
+            <li><strong>Web3Forms</strong> — Servizio per l'invio del modulo di contatto. Non imposta cookie di tracciamento.</li>
+          </ul>
+          <p style="margin-top:0.5rem; margin-bottom:0;">
+            Base giuridica: consenso dell'utente (art. 6 §1 lit. a GDPR). Titolare del trattamento:
+            Andrea Cappelletti — <a href="mailto:andcappe@gmail.com" style="color:var(--blue2);">andcappe@gmail.com</a>.
+            Puoi revocare il consenso in qualsiasi momento.
+          </p>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.6rem; min-width:180px; align-items:stretch;">
+        <button onclick="setCookieConsent('all')" style="
+          padding:10px 20px; background:var(--blue); color:#fff;
+          border:none; border-radius:8px; font-weight:700; font-size:0.85rem;
+          cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s;">
+          <i class="fa-solid fa-check" style="margin-right:6px;"></i>Accetta tutti
+        </button>
+        <button onclick="setCookieConsent('necessary')" style="
+          padding:10px 20px; background:#fff; color:var(--blue);
+          border:1.5px solid var(--blue3); border-radius:8px; font-weight:600;
+          font-size:0.85rem; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s;">
+          Solo necessari
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
@@ -975,9 +1035,64 @@
     <p class="footer-disclaimer">
       Andrea Cappelletti è iscritto all'Albo unico dei Consulenti Finanziari (OCF) nella sezione Consulenti Finanziari abilitati all'offerta fuori sede. Monomandatario FinecoBank S.p.A. — Le informazioni presenti in questo sito hanno scopo esclusivamente informativo e non costituiscono offerta di servizi di investimento né sollecitazione al pubblico risparmio.
     </p>
+    <p style="font-size:0.72rem; color:rgba(232,240,251,0.45); margin-top:0.5rem; max-width:1200px; margin-left:auto; margin-right:auto;">
+      <a href="#" onclick="resetCookieConsent(); return false;"
+         style="color:rgba(232,240,251,0.6); text-decoration:underline; cursor:pointer;">
+        Gestisci preferenze cookie
+      </a>
+      &nbsp;·&nbsp; Titolare del trattamento: Andrea Cappelletti &nbsp;·&nbsp;
+      <a href="mailto:andcappe@gmail.com" style="color:rgba(232,240,251,0.6);">andcappe@gmail.com</a>
+    </p>
   </footer>
 
   <script>
+    /* ── Cookie consent GDPR ─────────────────────────────────────────── */
+    function setCookieConsent(level) {
+      localStorage.setItem('cookie_consent', level);
+      localStorage.setItem('cookie_consent_date', new Date().toISOString());
+      document.getElementById('cookie-banner').style.display = 'none';
+      if (level === 'all') {
+        loadCalendly();
+      }
+    }
+
+    function resetCookieConsent() {
+      localStorage.removeItem('cookie_consent');
+      localStorage.removeItem('cookie_consent_date');
+      document.getElementById('cookie-banner').style.display = 'block';
+    }
+
+    function loadCalendly() {
+      const container = document.querySelector('.calendly-container');
+      if (!container) return;
+      if (container.querySelector('iframe')) return; // già caricato
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://calendly.com/andcappe?hide_gdpr_banner=1&background_color=ffffff&text_color=1a3a6b&primary_color=2554a0';
+      iframe.width  = '100%';
+      iframe.height = '680';
+      iframe.frameBorder = '0';
+      iframe.style.border = 'none';
+      container.innerHTML = '';
+      container.appendChild(iframe);
+    }
+
+    function initCookies() {
+      const consent = localStorage.getItem('cookie_consent');
+      if (!consent) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      } else if (consent === 'all') {
+        loadCalendly();
+      }
+    }
+
+    document.getElementById('cookie-more-link').addEventListener('click', function(e) {
+      e.preventDefault();
+      const detail = document.getElementById('cookie-detail');
+      const isOpen = detail.style.display !== 'none';
+      detail.style.display = isOpen ? 'none' : 'block';
+      this.textContent = isOpen ? 'Leggi di più' : 'Chiudi';
+    });
+
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('hamburger-btn').addEventListener('click', () => {
       document.getElementById('mobile-menu').classList.toggle('open');
@@ -991,6 +1106,7 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    initCookies();
     async function handleFormSubmit(e) {
       e.preventDefault();
       const form = e.target;
